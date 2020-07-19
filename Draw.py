@@ -13,6 +13,11 @@ class draw:
         self.contents = ' '.join(contents)
         pygame.font.init()
 
+    def draw_end_text(self, screen, message_1, message_2, col, font):
+        m_1 = font.render(message_1, False, col)
+        m_2 = font.render(message_2, False, col)
+        screen.blit(m_1, (int(self.settings.WIDTH / 30), int(self.settings.HEIGHT / 4)))
+        screen.blit(m_2, (int(self.settings.WIDTH / 30), int(self.settings.HEIGHT / 2)))
     def draw_words(self, screen, text, typed_letters, col, correct_col, wrong_col, font):
         def split(word):
             return [char for char in word]

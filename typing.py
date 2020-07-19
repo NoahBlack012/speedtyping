@@ -24,6 +24,7 @@ class typing:
         self.clock = pygame.time.Clock()
         self.time_font = pygame.font.Font('freesansbold.ttf', 60)
         self.text_font = pygame.font.Font('freesansbold.ttf', 20)
+        self.end_font = pygame.font.Font('freesansbold.ttf', 30)
         with open ("texts/text.txt") as f:
             contents = f.readlines()
         for n,line in enumerate(contents):
@@ -95,12 +96,17 @@ class typing:
                 break
         self.letters_right, self.wpm, self.typing_percentage, self.text_len, self.minutes = self.player.get_score(self.typed_letters, self.line_contents, self.minutes, self.seconds)
 
-        print (f"You got {self.letters_right} correct out of {self.text_len} in {self.minutes} minutes")
-        print (f"You typed at {self.wpm} words per minute on {self.typing_percentage}% accuracy")
+        self.message_1 = (f"You got {self.letters_right} letters correct out of {self.text_len} letters in {self.minutes} minutes")
+        self.message_2 = (f"You typed at {self.wpm} words per minute on {self.typing_percentage}% accuracy")
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+            self.screen.fill(self.settings.bg_col)
+            ##Draw Items Here##
+            self.draw.draw_end_text(self.screen, self.message_1, self.message_2, self.settings.font_col, self.end_font)
+            ###################
+            pygame.display.flip()
 
 if __name__ == '__main__':
     t = typing()
