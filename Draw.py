@@ -13,11 +13,21 @@ class draw:
         self.contents = ' '.join(contents)
         pygame.font.init()
 
-    def draw_end_text(self, screen, message_1, message_2, col, font):
+    def draw_end_text(self, screen, message_1, message_2, col, font, hover):
         m_1 = font.render(message_1, False, col)
         m_2 = font.render(message_2, False, col)
-        screen.blit(m_1, (int(self.settings.WIDTH / 30), int(self.settings.HEIGHT / 4)))
-        screen.blit(m_2, (int(self.settings.WIDTH / 30), int(self.settings.HEIGHT / 2)))
+        screen.blit(m_1, (int(self.settings.WIDTH / 30), int(self.settings.HEIGHT / 8)))
+        screen.blit(m_2, (int(self.settings.WIDTH / 30), int(self.settings.HEIGHT / 4)))
+        
+        if hover:
+            m_3 = font.render("Play Again", False, col)
+            pygame.draw.rect(screen, col, (self.settings.play_again_x, self.settings.play_again_y, self.settings.play_again_width, self.settings.play_again_height), 5)
+            screen.blit(m_3, (self.settings.play_again_x + 15, self.settings.play_again_y + 10))
+        else:
+            m_3 = font.render("Play Again", False, self.settings.bg_col)
+            pygame.draw.rect(screen, col, (self.settings.play_again_x, self.settings.play_again_y, self.settings.play_again_width, self.settings.play_again_height))
+            screen.blit(m_3, (self.settings.play_again_x + 15, self.settings.play_again_y + 10))
+
     def draw_words(self, screen, text, typed_letters, col, correct_col, wrong_col, font):
         def split(word):
             return [char for char in word]
