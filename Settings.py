@@ -18,3 +18,4 @@ class settings:
         width, height = end_font.size("Play Again")
         self.play_again_width = int(width + 50)
         self.play_again_height = int(height + 20)
+        

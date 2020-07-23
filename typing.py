@@ -25,6 +25,7 @@ class typing:
         self.time_font = pygame.font.Font('freesansbold.ttf', 60)
         self.text_font = pygame.font.Font('freesansbold.ttf', 20)
         self.end_font = pygame.font.Font('freesansbold.ttf', 30)
+        self.start_font = pygame.font.Font('freesansbold.ttf', 100)
         with open ("texts/text.txt") as f:
             contents = f.readlines()
         for n,line in enumerate(contents):
@@ -51,6 +52,22 @@ class typing:
             self.key_typed = ''
             self.btn_hover = False
             while True:
+                self.screen.fill(self.settings.bg_col)
+                self.draw.draw_start_text(self.screen, self.settings.text_col, self.start_font, self.btn_hover)
+                pygame.display.flip()
+                mousex, mousey = pygame.mouse.get_pos()
+                click = pygame.mouse.get_pressed()
+                if mousex > self.draw.play_x and mousex < self.draw.play_x + self.draw.play_width and mousey > self.draw.play_y and mousey < self.draw.play_y + self.draw.play_height:
+                    self.btn_hover = True
+                    if click[0] == 1:
+                        break
+                else: 
+                    self.btn_hover = False
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+            while True:
+                self.btn_hover = False
                 self.clock.tick(self.settings.FPS)
                 self.ms += 20
                 if self.ms >= 1000:

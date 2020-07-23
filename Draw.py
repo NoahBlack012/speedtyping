@@ -12,6 +12,20 @@ class draw:
                contents[n]=line.rstrip()
         self.contents = ' '.join(contents)
         pygame.font.init()
+        self.play_x = int(self.settings.WIDTH / 4)
+        self.play_y = int(self.settings.HEIGHT / 4)
+        self.play_width = int(self.settings.WIDTH / 2)
+        self.play_height = int(self.settings.HEIGHT / 2)
+
+    def draw_start_text(self, screen, col, font, hover):       
+        if hover:
+            message = font.render("Play", False, col)
+            pygame.draw.rect(screen, col, (self.play_x, self.play_y, self.play_width, self.play_height), 5)
+            screen.blit(message, (self.play_x + 150, self.play_y + 100))
+        else:
+            message = font.render("Play", False, self.settings.bg_col)
+            pygame.draw.rect(screen, col, (self.play_x, self.play_y, self.play_width, self.play_height))
+            screen.blit(message, (self.play_x + 150, self.play_y + 100))
 
     def draw_end_text(self, screen, message_1, message_2, col, font, hover):
         m_1 = font.render(message_1, False, col)
