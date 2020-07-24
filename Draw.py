@@ -16,6 +16,8 @@ class draw:
         self.play_y = int(self.settings.HEIGHT / 4)
         self.play_width = int(self.settings.WIDTH / 2)
         self.play_height = int(self.settings.HEIGHT / 2)
+        self.text_font = pygame.font.Font('freesansbold.ttf', 20)
+        self.space_width, self.space_height = self.text_font.size(" ")
 
     def draw_start_text(self, screen, col, font, hover):       
         if hover:
@@ -62,24 +64,32 @@ class draw:
                         if self.contents[i] == " ":
                             display_letters.pop()
                             str_display_letters.pop()
-                            display_letters.append(font.render(str("_"), False, correct_col))
-                            str_display_letters.append("_")
+                            #display_letters.append(font.render(str("_"), False, correct_col))
+                            display_letters.append({"shape": "rect", "col": "correct_col"})
+                            str_display_letters.append(" ")
                     elif self.contents[i] != typed_letters[i]:
                         display_letters.append(font.render(str(letter), False, wrong_col))
                         str_display_letters.append(str(letter))
                         if self.contents[i] == " ":
                             display_letters.pop()
                             str_display_letters.pop()
-                            display_letters.append(font.render(str("_"), False, wrong_col))
-                            str_display_letters.append("_")
+                            display_letters.append({"shape": "rect", "col": "wrong_col"})
+                            str_display_letters.append(" ")
                 except IndexError as e:
                     display_letters.append(font.render(str(letter), False, col))
                     str_display_letters.append(str(letter))
                 i += 1
             for n, letter in enumerate(display_letters):
-                screen.blit(letter, (x, y))
-                self.text_width, self.text_height = font.size(str_display_letters[n])
-                x += self.text_width
+                try:
+                    screen.blit(letter, (x, y))
+                    self.text_width, self.text_height = font.size(str_display_letters[n])
+                    x += self.text_width
+                except TypeError as e:
+                    if letter['col'] == "correct_col":
+                        pygame.draw.rect(screen, correct_col, (x, y, self.space_width, self.space_height))
+                    else:
+                        pygame.draw.rect(screen, wrong_col, (x, y, self.space_width, self.space_height))
+                    x += self.space_width
             y += 50
 
     def draw_timer(self, screen, time, col, font):
